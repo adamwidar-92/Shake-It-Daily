@@ -1,39 +1,61 @@
-import { Link } from "expo-router";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Link, useFocusEffect } from "expo-router";
+import { useCallback, useState } from "react";
+import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import { hamtaInlagg, type Inlagg } from "./lib/lagring";
 
 export default function Hem() {
+  const [inlagg, setInlagg] = useState<Inlagg[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      hamtaInlagg().then(setInlagg);
+    }, [])
+  );
+
   return (
     <View style={styles.container}>
-      <Text style={styles.titel}>Shake It-Daily</Text>
-      <Text style={styles.text}>
-        Skriv korta inlägg. Skak kommer i ett senare steg.
-      </Text>
-
       <Link href="/ny" asChild>
         <Pressable style={styles.knapp}>
           <Text style={styles.knappText}>Nytt inlägg</Text>
         </Pressable>
       </Link>
+
+      <FlatList
+        data={inlagg}
+        keyExtractor={(item) => item.id}
+        ListEmptyComponent={<Text style={styles.tom}>Inga inlägg ännu.</Text>}
+        renderItem={({ item }) => (
+          <Link href={`/inlagg/${item.id}`} asChild>
+            <Pressable style={styles.kort}>
+              <Text style={styles.titel}>{item.titel || "Utan titel"}</Text>
+              <Text numberOfLines={2}>
+                {item.privat ? "Privat" : item.text}
+              </Text>
+            </Pressable>
+          </Link>
+        )}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    gap: 12,
-  },
-  titel: { fontSize: 28, fontWeight: "700" },
-  text: { fontSize: 16, color: "#444" },
+  container: { flex: 1, padding: 16, backgroundColor: "#fff" },
   knapp: {
     backgroundColor: "#111",
     padding: 14,
     borderRadius: 10,
     alignItems: "center",
-    marginTop: 8,
+    marginBottom: 16,
   },
   knappText: { color: "#fff", fontWeight: "600" },
+  tom: { color: "#777", marginTop: 24 },
+  kort: {
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 10,
+    padding: 12,
+    marginBottom: 10,
+  },
+  titel: { fontSize: 16, fontWeight: "600", marginBottom: 4 },
 });

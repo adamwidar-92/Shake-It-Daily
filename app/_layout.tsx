@@ -6,6 +6,7 @@ export default function RootLayout () {
         <Stack>
             <Stack.Screen name="index" options= {{title : "Shake It-Daily"}} />
             <Stack.Screen name="ny" options = {{ title : " Nytt inlägg"}} />
+            <Stack.Screen name="inlagg/[id]" options={{ title: "Inlägg" }} />
         </Stack>
     )
 }

@@ -1,27 +1,29 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    Pressable,
-    StyleSheet,
-    Switch,
-    Text,
-    TextInput,
-    View,
+  Pressable,
+  StyleSheet,
+  Switch,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
+import { sparaInlagg } from "./lib/lagring";
 
 export default function NyttInlagg() {
   const [titel, setTitel] = useState("");
   const [text, setText] = useState("");
   const [privat, setPrivat] = useState(false);
 
-  function spara() {
-    if (!text.trim()) {
-      return;
-    }
-    // Tills vidare: bara skriv ut så du ser att värdena stämmer
-    console.log({ titel, text, privat });
-    router.back();
-  }
+async function spara() {
+  if (!text.trim()) return;
+  await sparaInlagg({
+    titel: titel.trim(),
+    text: text.trim(),
+    privat,
+  });
+  router.back();
+}
 
   return (
     <View style={styles.container}>
