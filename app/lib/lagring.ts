@@ -5,6 +5,8 @@ export type Inlagg = {
   titel: string;
   text: string;
   privat: boolean;
+  prompt?: string;
+  bildUri?: string;
 };
 
 const FIL = FileSystem.documentDirectory + "inlagg.json";
