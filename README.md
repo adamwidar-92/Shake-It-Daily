@@ -72,12 +72,12 @@ Navigering med Expo Router och hela appen är skriven i TypeScript.
 ## Krav-checklista
 
 ✅ **Godkänt:**
-- Minst 4 RN-komponenter (jag använder 8)
-- Minst 4 Expo SDK-moduler (jag använder 5)
+- Minst 4 RN-komponenter 
+- Minst 4 Expo SDK-moduler 
 - Expo Router för navigering
-- En skärm med parameter (detaljskärmen tar id)
+- En skärm med parameter 
 - Git commits spridda över tiden
 - README.md
-- TypeScript: 0 fel
+- TypeScript:
 - expo-doctor: all checks passed
 
